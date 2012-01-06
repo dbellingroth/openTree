@@ -1,0 +1,595 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY opentree "http://erasmus.bellingroth.org/semanticweb/opentree.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://erasmus.bellingroth.org/semanticweb/opentree.owl#"
+     xml:base="http://erasmus.bellingroth.org/semanticweb/opentree.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:opentree="http://erasmus.bellingroth.org/semanticweb/opentree.owl#">
+    <owl:Ontology rdf:about="http://erasmus.bellingroth.org/semanticweb/opentree.owl"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasAncestor -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasAncestor">
+        <rdfs:range rdf:resource="&opentree;Person"/>
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasParent"/>
+        </owl:propertyChainAxiom>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasGrandparent"/>
+        </owl:propertyChainAxiom>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasAncestor"/>
+            <rdf:Description rdf:about="&opentree;hasAncestor"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasChild -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasChild">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&opentree;Person"/>
+        <owl:inverseOf rdf:resource="&opentree;hasParent"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasChildWith -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasChildWith">
+        <rdfs:range rdf:resource="&opentree;Person"/>
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasChild"/>
+            <rdf:Description rdf:about="&opentree;hasParent"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasCousin -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasCousin">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&opentree;Person"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasUncle"/>
+            <rdf:Description rdf:about="&opentree;hasChild"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasDescendant -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasDescendant">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&opentree;Person"/>
+        <owl:inverseOf rdf:resource="&opentree;hasAncestor"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasDescendant"/>
+            <rdf:Description rdf:about="&opentree;hasDescendant"/>
+        </owl:propertyChainAxiom>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasGrandchild"/>
+        </owl:propertyChainAxiom>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasChild"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasGrandchild -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasGrandchild">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&opentree;Person"/>
+        <owl:inverseOf rdf:resource="&opentree;hasGrandparent"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasChild"/>
+            <rdf:Description rdf:about="&opentree;hasChild"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasGrandparent -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasGrandparent">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&opentree;Person"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topObjectProperty"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasParent"/>
+            <rdf:Description rdf:about="&opentree;hasParent"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasMarriage -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasMarriage">
+        <rdfs:range rdf:resource="&opentree;Marriage"/>
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <owl:inverseOf rdf:resource="&opentree;hasMarriageMember"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasMarriageMember -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasMarriageMember">
+        <rdfs:domain rdf:resource="&opentree;Marriage"/>
+        <rdfs:range rdf:resource="&opentree;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasMarriageWith -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasMarriageWith">
+        <rdfs:range rdf:resource="&opentree;Person"/>
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasMarriage"/>
+            <rdf:Description rdf:about="&opentree;hasMarriageMember"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasNephew -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasNephew">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&opentree;Person"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasSibling"/>
+            <rdf:Description rdf:about="&opentree;hasChild"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasParent -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasParent">
+        <rdfs:range rdf:resource="&opentree;Person"/>
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasSibling -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasSibling">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&opentree;Person"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasParent"/>
+            <rdf:Description rdf:about="&opentree;hasChild"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasUncle -->
+
+    <owl:ObjectProperty rdf:about="&opentree;hasUncle">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&opentree;Person"/>
+        <owl:inverseOf rdf:resource="&opentree;hasNephew"/>
+        <owl:propertyChainAxiom rdf:parseType="Collection">
+            <rdf:Description rdf:about="&opentree;hasParent"/>
+            <rdf:Description rdf:about="&opentree;hasSibling"/>
+        </owl:propertyChainAxiom>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasDateOfBirth -->
+
+    <owl:DatatypeProperty rdf:about="&opentree;hasDateOfBirth">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasDateOfDeath -->
+
+    <owl:DatatypeProperty rdf:about="&opentree;hasDateOfDeath">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasDateOfMarriage -->
+
+    <owl:DatatypeProperty rdf:about="&opentree;hasDateOfMarriage">
+        <rdfs:domain rdf:resource="&opentree;Marriage"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasEndOfMarriage -->
+
+    <owl:DatatypeProperty rdf:about="&opentree;hasEndOfMarriage">
+        <rdfs:domain rdf:resource="&opentree;Marriage"/>
+        <rdfs:range rdf:resource="&xsd;dateTime"/>
+        <rdfs:subPropertyOf rdf:resource="&owl;topDataProperty"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasFirstName -->
+
+    <owl:DatatypeProperty rdf:about="&opentree;hasFirstName">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasGivenName -->
+
+    <owl:DatatypeProperty rdf:about="&opentree;hasGivenName">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasLastName -->
+
+    <owl:DatatypeProperty rdf:about="&opentree;hasLastName">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasPlaceOfBirth -->
+
+    <owl:DatatypeProperty rdf:about="&opentree;hasPlaceOfBirth">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#hasSex -->
+
+    <owl:DatatypeProperty rdf:about="&opentree;hasSex">
+        <rdfs:domain rdf:resource="&opentree;Person"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Aunt -->
+
+    <owl:Class rdf:about="&opentree;Aunt">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&opentree;Person"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&opentree;hasNephew"/>
+                        <owl:minCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&opentree;hasSex"/>
+                        <owl:hasValue>female</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+    </owl:Class>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Father -->
+
+    <owl:Class rdf:about="&opentree;Father">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&opentree;Person"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&opentree;hasChild"/>
+                        <owl:minCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&opentree;hasSex"/>
+                        <owl:hasValue>male</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&opentree;Person"/>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Grandfather -->
+
+    <owl:Class rdf:about="&opentree;Grandfather">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&opentree;Person"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&opentree;hasChild"/>
+                                <owl:onClass rdf:resource="&opentree;Father"/>
+                                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&opentree;hasChild"/>
+                                <owl:onClass rdf:resource="&opentree;Mother"/>
+                                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&opentree;hasSex"/>
+                        <owl:hasValue>male</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Grandmother -->
+
+    <owl:Class rdf:about="&opentree;Grandmother">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&opentree;Person"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&opentree;hasChild"/>
+                                <owl:onClass rdf:resource="&opentree;Father"/>
+                                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&opentree;hasChild"/>
+                                <owl:onClass rdf:resource="&opentree;Mother"/>
+                                <owl:minQualifiedCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minQualifiedCardinality>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&opentree;hasSex"/>
+                        <owl:hasValue>female</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Marriage -->
+
+    <owl:Class rdf:about="&opentree;Marriage"/>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Mother -->
+
+    <owl:Class rdf:about="&opentree;Mother">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&opentree;Person"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&opentree;hasChild"/>
+                        <owl:minCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&opentree;hasSex"/>
+                        <owl:hasValue>female</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&opentree;Person"/>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Person -->
+
+    <owl:Class rdf:about="&opentree;Person"/>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Uncle -->
+
+    <owl:Class rdf:about="&opentree;Uncle">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&opentree;Person"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&opentree;hasNephew"/>
+                        <owl:minCardinality rdf:datatype="&xsd;nonNegativeInteger">1</owl:minCardinality>
+                    </owl:Restriction>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&opentree;hasSex"/>
+                        <owl:hasValue>male</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Anna -->
+
+    <owl:NamedIndividual rdf:about="&opentree;Anna">
+        <rdf:type rdf:resource="&opentree;Person"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Ehe1 -->
+
+    <owl:NamedIndividual rdf:about="&opentree;Ehe1">
+        <rdf:type rdf:resource="&opentree;Marriage"/>
+        <hasDateOfMarriage rdf:datatype="&xsd;dateTime">21.07.1988</hasDateOfMarriage>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Gertrud -->
+
+    <owl:NamedIndividual rdf:about="&opentree;Gertrud">
+        <rdf:type rdf:resource="&opentree;Person"/>
+        <hasChild rdf:resource="&opentree;Petra"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Hans -->
+
+    <owl:NamedIndividual rdf:about="&opentree;Hans">
+        <rdf:type rdf:resource="&opentree;Person"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Horst -->
+
+    <owl:NamedIndividual rdf:about="&opentree;Horst">
+        <rdf:type rdf:resource="&opentree;Person"/>
+        <hasChild rdf:resource="&opentree;Petra"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Klaus -->
+
+    <owl:NamedIndividual rdf:about="&opentree;Klaus">
+        <rdf:type rdf:resource="&opentree;Person"/>
+        <hasSibling rdf:resource="&opentree;Peter"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Peter -->
+
+    <owl:NamedIndividual rdf:about="&opentree;Peter">
+        <rdf:type rdf:resource="&opentree;Person"/>
+        <hasSex>male</hasSex>
+        <hasChild rdf:resource="&opentree;Anna"/>
+        <hasMarriage rdf:resource="&opentree;Ehe1"/>
+        <hasChild rdf:resource="&opentree;Hans"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://erasmus.bellingroth.org/semanticweb/opentree.owl#Petra -->
+
+    <owl:NamedIndividual rdf:about="&opentree;Petra">
+        <rdf:type rdf:resource="&opentree;Person"/>
+        <hasSex>female</hasSex>
+        <hasChild rdf:resource="&opentree;Anna"/>
+        <hasMarriage rdf:resource="&opentree;Ehe1"/>
+        <hasChild rdf:resource="&opentree;Hans"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.2.3.1824) http://owlapi.sourceforge.net -->
+
